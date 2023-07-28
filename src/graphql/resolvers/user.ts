@@ -5,8 +5,7 @@ const resolvers = {
   Mutation: {
     createUsername: (_: any, args: { username: string }, context: any) => {
       const { username } = args;
-      console.log("Request in backend", args);
-      console.log("Context resp ==>>", context);
+      console.log("Request in backend", args, context);
     },
   },
   //   Subscription: {},

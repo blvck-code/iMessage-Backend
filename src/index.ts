@@ -11,6 +11,8 @@ import * as dotenv from "dotenv";
 
 import typeDefs from "./graphql/typeDefs";
 import resolvers from "./graphql/resolvers";
+import { getSession } from "next-auth/react";
+import { GraphQLContext } from "./utils/types";
 
 async function main() {
   dotenv.config();
@@ -31,6 +33,11 @@ async function main() {
     schema,
     csrfPrevention: true,
     cache: "bounded",
+    context: async ({ req, res }): Promise<GraphQLContext> => {
+      const session = await getSession({ req });
+      console.log("Session ==>", session);
+      return { session };
+    },
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }),
       ApolloServerPluginLandingPageLocalDefault({ embed: true }),
